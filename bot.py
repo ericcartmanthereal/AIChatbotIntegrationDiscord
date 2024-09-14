@@ -1,3 +1,4 @@
+import os
 import discord
 from discord.ext import commands
 import messageHandler
@@ -18,4 +19,4 @@ async def on_message(message: discord.Message):
   answer = model.generate_content(user_prompt)
   await message.channel.send(answer)
 
-bot.run("")
+bot.run(os.getenv("DISCORD_TOKEN"))

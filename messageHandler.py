@@ -1,8 +1,6 @@
 import os
-import asyncio
 from dotenv import load_dotenv
 from pathlib import Path
-from google.cloud import aiplatform
 import google.generativeai as genai
 
 
