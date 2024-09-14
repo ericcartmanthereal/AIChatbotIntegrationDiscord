@@ -25,7 +25,7 @@ async  def on_ready():
 
 @bot.event
 async def on_message(message: discord.Message):
-  if message.autor == bot.user: return
+  if message.author == bot.user: return
   response = model.generate_content(message.content)
   
   print(response.text)
