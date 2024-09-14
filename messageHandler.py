@@ -1,8 +1,11 @@
 import os
-import json
+import asyncio
 from dotenv import load_dotenv
 from pathlib import Path
 from google.cloud import aiplatform
+import google.generativeai as genai
+
+genai.configure(api_key=os.getenv["GOOGLE_AI_PK"])
 
 #Load private keys
 env_path = Path('.') / '.env'  # Pfad zur .env-Datei (im aktuellen Verzeichnis)
@@ -29,9 +32,21 @@ service_account = {"type": "service_account",
 }
 
 
-#Connect to the Gemini api endpoint
+model = genai.GenerativeModel("gemini-1.5-flash")
+response = model.generate_content("Write a story about a magic backpack.")
+print(response.text)
+
+"""#Connect to the Gemini api endpoint
 service_account = service_account
 client_options = aiplatform.gapic.EndpointServiceAsyncClientOptions(client_certs=service_account)
 endpoint = aiplatform.gapic.EndpointServiceAsyncClient(client_options=client_options)
 
+async def predict(prompt):
+    instances = [{"content": prompt}]
+    response = await endpoint.predict(endpoint_name="YOUR_ENDPOINT_NAME", instances=instances)
+    for prediction in response.predictions:
+        return prediction["content"]
 
+if __name__ == "__main__":
+    asyncio.run(predict("Was ist das Wetter heute in München?"))
+    """
