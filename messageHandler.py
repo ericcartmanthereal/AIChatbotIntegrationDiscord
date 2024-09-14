@@ -18,5 +18,5 @@ genai.configure(api_key=google_api_key)
 
 
 model = genai.GenerativeModel("gemini-1.5-flash")
-response = model.generate_content("Wie geht es dir?")
+response = model.generate_content("Wie tauschen Developer am besten .env dateien aus?")
 print(response.text)
