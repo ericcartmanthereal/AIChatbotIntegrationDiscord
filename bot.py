@@ -15,13 +15,8 @@ async  def on_ready():
 @bot.event
 async def on_message(message: discord.Message):
   user_prompt = message.content
-  instances = [{"prompt": user_prompt}]
   model = messageHandler.model
-  endpointpath = constants.endpoint_path
-  answer = await model.predict(
-    endpoint=endpointpath,
-    instances=instances
-  )
+  answer = model.generate_content(user_prompt)
   await message.channel.send(answer)
 
 
