@@ -1,6 +1,10 @@
 import os
+from pathlib import Path
+
 import discord
 from discord.ext import commands
+from dotenv import load_dotenv
+
 import messageHandler
 
 intents = discord.Intents.default()
@@ -19,4 +23,7 @@ async def on_message(message: discord.Message):
   answer = model.generate_content(user_prompt)
   await message.channel.send(answer)
 
+
+env_path = Path('.') / '.env'  # Pfad zur .env-Datei (im aktuellen Verzeichnis)
+load_dotenv(dotenv_path=env_path)
 bot.run(os.getenv("DISCORD_TOKEN"))
