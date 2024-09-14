@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import constants
 import messageHandler
 
 intents = discord.Intents.default()
@@ -19,10 +18,4 @@ async def on_message(message: discord.Message):
   answer = model.generate_content(user_prompt)
   await message.channel.send(answer)
 
-
-  return
-  #  url = constants.gemini_token
-  #  response = requests.get(url)
-
-
-bot.run(constants.discord_token)
+bot.run("")
