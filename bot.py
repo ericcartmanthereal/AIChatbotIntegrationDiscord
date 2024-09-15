@@ -25,6 +25,8 @@ async  def on_ready():
 @bot.event
 async def on_message(message: discord.Message):
   if message.author == bot.user: return
+  if message.content.startswith("!") == False:
+    return
   response = model.generate_content(message.content)
   splitted_answer = [response.text[i:i + 1950] for i in range(0, len(response.text), 1950)]
   for element in (splitted_answer):
