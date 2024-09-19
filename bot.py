@@ -35,10 +35,14 @@ async def on_message(message: discord.Message):
           print('Saving image: ' + imageName)
           shutil.copyfileobj(r.raw, out_file)
           image_file = genai.upload_file(path= './1.jpg')
-  
-  try: response = model.generate_content([image_file, message.content])
-  except UnboundLocalError: response = model.generate_content(message.content)
-  
+  try:
+    if image_file is not None:
+      response = model.generate_content([image_file, message.content])
+    else:
+      response = model.generate_content(message.content)
+  except UnboundLocalError:
+    response = model.generate_content(message.content)
+
   splitted_answer = [response.text[i:i + 1950] for i in range(0, len(response.text), 1950)]
   for element in (splitted_answer):
     await message.channel.send(element)
