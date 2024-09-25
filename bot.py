@@ -10,7 +10,7 @@ import requests
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="!",intents=intents)
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-1.5-pro-latest")
 
 @bot.event
 async  def on_ready():
