@@ -51,11 +51,11 @@ def scrape_latest_chapter():
         else:
             print("Chapters list not found")
 
-        return 0, ""
+        return 0, "", ""
 
     except Exception as e:
         print(f"Scraping error: {e}")
-        return 0, ""
+        return 0, "", ""
     finally:
         if 'driver' in locals():
             driver.quit()
@@ -76,27 +76,25 @@ async def chapter_checker():
     initial_chapter,title,chapter_url = await loop.run_in_executor(None, scrape_latest_chapter)
     if initial_chapter > 0:
         current_latest_chapter = initial_chapter
-
+        
+        print(f"Initial latest chapter set to: {current_latest_chapter}, with the title: {title}")
         embed = discord.Embed(
-            title=f"One Piece Chapter {current_latest_chapter} is out! 🎉",
-            description=f"**Title:** {title}",
-            color=discord.Color.red(),
-            url=chapter_url
+        title=f"One Piece Chapter {current_latest_chapter} is out! 🎉",
+        description=f"**Title:** {new_title}",
+        color=discord.Color.red(),
+        url=chapter_url
         )
-
         # Add an image (replace URL with your actual image URL)
         embed.set_image(url="https://cdn.onepiecechapters.com/file/CDN-M-A-N/op_1009_00-Cover-redraw-fin-wm-lvl-1.png")
 
-        # Add a footer if you want
+        # Add a footer
         embed.set_footer(text="By Meto and Tim 🌮🤝🥨")
 
         # Add timestamp
         embed.timestamp = datetime.datetime.now(datetime.timezone.utc)
 
-        # Send the embed with the mention
-        await channel.send(f"<@&1347316942188445706>", embed=embed)
-        
-        print(f"Initial latest chapter set to: {current_latest_chapter}, with the title: {title}")
+        await channel.send(f"<@1347316942188445706>", embed=embed)
+        print(f"New chapter #{new_chapter} with titel: {new_title} detected and notified!")
 
     while True:
         new_chapter,new_title,chapter_url = await loop.run_in_executor(None, scrape_latest_chapter)
@@ -105,14 +103,21 @@ async def chapter_checker():
 
             embed = discord.Embed(
             title=f"One Piece Chapter {current_latest_chapter} is out! 🎉",
-            description=f"**Title:** {title}",
+            description=f"**Title:** {new_title}",
             color=discord.Color.red(),
             url=chapter_url
             )
+            # Add an image (replace URL with your actual image URL)
+            embed.set_image(url="https://cdn.onepiecechapters.com/file/CDN-M-A-N/op_1009_00-Cover-redraw-fin-wm-lvl-1.png")
+
+            # Add a footer
+            embed.set_footer(text="By Meto and Tim 🌮🤝🥨")
+
+            # Add timestamp
             embed.timestamp = datetime.datetime.now(datetime.timezone.utc)
 
-            await channel.send(f"<@1347316942188445706>", embed=embed)
-            print(f"New chapter #{new_chapter} with titel: {new_title} detected and notified!")
+            await channel.send(f"<@&1347316942188445706>", embed=embed)
+            print(f"New chapter #{new_chapter} with tit: {new_title} detected and notified!")
             await asyncio.sleep(432000)
         elif new_chapter == 0:
             print("Scraping failed, retrying later...")
